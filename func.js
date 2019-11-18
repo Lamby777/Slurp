@@ -14,7 +14,10 @@ const ops = [
 		return evalFunc(read);
 	}},
 	{name: "is", f: (a, b) => {
-		global.a = b;
+		global[a] = b;
+	}},
+	{name: "log", f: (a) => {
+		out(a);
 	}},
 ];
 
@@ -61,11 +64,16 @@ function lex(code) {
 	// Operations
 	for (const line in code) {
 		for (const op of ops) {
+			let oplen = op.f.length;
 			let spaced = code[line].split(/\s/g);
 			if (code[line].includes(op.name)) {
 				// Time for an operation!
-				for (kwn in spaced.reverse()) {
-					if (op.f.length === 2) {
+				for (kwn = spaced.length-1;kwn>=0;kwn--) {
+					// Before ops, replace vars
+					/*kwargs.forEach((v) => {
+						if 
+					});*/
+					/*if (op.f.length === 2) {
 						kwargs = spaced.slice(kwn-1, kwn+2);
 						if (kwargs[1] == op.name) {
 							spaced.splice(kwn-1, 3, op.f(kwargs[0], kwargs[2]));
@@ -73,8 +81,19 @@ function lex(code) {
 						//console.log(spaced);
 					} else {
 						kwargs = spaced.slice(kwn-1, kwn+1);
-						if (kwargs[1] == op.name) {
-							spaced.splice(kwn-1, 2, op.f(kwargs[0]));
+						if (kwargs[0] == op.name) {
+							spaced.splice(kwn-1, 2, op.f(kwargs[1]));
+						}
+					}*/
+					if (oplen == 1) {
+						kwargs = spaced.slice(kwn-1, kwn+oplen);
+						if (kwargs[oplen-1] == op.name) {
+							spaced.splice(kwn-1, oplen+1, op.f(kwargs[1]));
+						}
+					} else {
+						kwargs = spaced.slice(kwn-1, kwn+oplen);
+						if (kwargs[oplen-1] == op.name) {
+							spaced.splice(kwn-1, oplen+1, op.f(kwargs[0],kwargs.slice(2,kwargs[oplen])));
 						}
 					}
 				}
@@ -83,6 +102,21 @@ function lex(code) {
 		}
 	}
 	return code.join("\n");
+}
+
+class Val {
+	constructor (v, parent) {
+		this.val = v;
+		this.parent = parent;
+	}
+}
+
+class Num extends Val {
+	constructor (n) {
+		this.len = Math.ceil(Math.log10(n + 1));;
+		this.even = !(n % 2);
+		this.odd = !this.even;
+	}
 }
 
 module.exports = {
