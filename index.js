@@ -1,12 +1,9 @@
 /*
-
---------------------
-| ~Slurp~          |
-| Version d6       |
-| By DexieTheSheep |
-| Nov 6, 2019      |
---------------------
-
+-------------------------------------
+|            ~Slurp~                |
+|         By DexieTheSheep          |
+| https://github.com/Lamby777/Slurp |
+-------------------------------------
 */
 
 const files = require("fs"); // file reading
