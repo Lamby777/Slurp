@@ -19,10 +19,15 @@ const ops = [
 	{name: "log", f: (a) => {
 		out(a);
 	}},
+	{name: "local", f: (a) => {
+		global[a] = null;
+	}},
 ];
 
 // Var scope
-const global = [];
+const global = [
+	{name: "dummy", value: "6"}
+];
 
 function evalFunc(code, silent = true) {
 	code = lex(code);
@@ -69,22 +74,6 @@ function lex(code) {
 			if (code[line].includes(op.name)) {
 				// Time for an operation!
 				for (kwn = spaced.length-1;kwn>=0;kwn--) {
-					// Before ops, replace vars
-					/*kwargs.forEach((v) => {
-						if 
-					});*/
-					/*if (op.f.length === 2) {
-						kwargs = spaced.slice(kwn-1, kwn+2);
-						if (kwargs[1] == op.name) {
-							spaced.splice(kwn-1, 3, op.f(kwargs[0], kwargs[2]));
-						}
-						//console.log(spaced);
-					} else {
-						kwargs = spaced.slice(kwn-1, kwn+1);
-						if (kwargs[0] == op.name) {
-							spaced.splice(kwn-1, 2, op.f(kwargs[1]));
-						}
-					}*/
 					if (oplen == 1) {
 						kwargs = spaced.slice(kwn-1, kwn+oplen);
 						if (kwargs[oplen-1] == op.name) {
@@ -101,7 +90,9 @@ function lex(code) {
 			}
 		}
 	}
-	return code.join("\n");
+	let lexRes = code.join("\n");
+	out(lexRes);
+	return lexRes;
 }
 
 class Val {
