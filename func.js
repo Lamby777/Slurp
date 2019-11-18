@@ -93,7 +93,6 @@ function lex(code) {
 		}
 	}
 	let lexRes = code.join("\n");
-	out(lexRes);
 	return lexRes;
 }
 
