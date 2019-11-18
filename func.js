@@ -73,13 +73,15 @@ function lex(code) {
 			let spaced = code[line].split(/\s/g);
 			if (code[line].includes(op.name)) {
 				// Time for an operation!
-				for (kwn = spaced.length-1;kwn>=0;kwn--) {
-					if (oplen == 1) {
+				if (oplen == 1) {
+					for (kwn = spaced.length-1;kwn>=0;kwn--) {
 						kwargs = spaced.slice(kwn-1, kwn+oplen);
 						if (kwargs[oplen-1] == op.name) {
 							spaced.splice(kwn-1, oplen+1, op.f(kwargs[1]));
 						}
-					} else {
+					}
+				} else {
+					for (kwn = spaced.length-1;kwn>=0;kwn--) {
 						kwargs = spaced.slice(kwn-1, kwn+oplen);
 						if (kwargs[oplen-1] == op.name) {
 							spaced.splice(kwn-1, oplen+1, op.f(kwargs[0],kwargs.slice(2,kwargs[oplen])));
