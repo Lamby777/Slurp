@@ -1,11 +1,13 @@
 const comment = "+"; // kinda like // in js
 const ops = [
+	// Arithmetic
 	{name: "ps", f: (a, b) => parseFloat(a)+parseFloat(b)},
 	{name: "sb", f: (a, b) => a-b},
 	{name: "mt", f: (a, b) => a*b},
 	{name: "dv", f: (a, b) => a/b},
-	{name: "&", f: (a, b) => parseBool(a) && parseBool(b)},
-	{name: "|", f: (a, b) => parseBool(a) || parseBool(b)},
+	// Booleans
+	{name: "and", f: (a, b) => parseBool(a) && parseBool(b)},
+	{name: "or", f: (a, b) => parseBool(a) || parseBool(b)},
 	{name: "~", f: (a) => !parseBool(a)},
 	// Import statement
 	{name: "im", f: (a) => {
