@@ -24,6 +24,15 @@ const ops = [
 	{name: "local", f: (a) => {
 		global[a] = null;
 	}},
+	{name: "linelog", f: (a, b = null) => {
+		if (typeof a === "string") {
+			a.split("\n").forEach(v => out(v));
+		} else if (typeof a === "object") {
+			a.forEach(v => out(v));
+		} else {
+			return toss("LineLog not accepted (Object or String only)", "ValClass")
+		}
+	}},
 ];
 
 // Var scope
@@ -53,9 +62,8 @@ function parseBool(val) {
 	else return !!val;
 }
 
-function toss(err, errt) {
-	if (errt) console.error(errt + " Error > " + err);
-	else console.error("Generic Error > " + err);
+function toss(err, errt = "Generic") {
+	console.error(errt + " Error > " + err);
 }
 
 function out(msg, type) {
