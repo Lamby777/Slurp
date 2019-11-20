@@ -9,7 +9,8 @@ const fn = require("./func"); // grammar, io, and other
 
 let read = files.createReadStream("code.dx", "utf8");
 read.on("data", (ch) => {
-	fn.out(fn.lex(ch));
+	//fn.out(fn.lex(ch));
+	fn.lex(ch);
 });
 read.on("end", () => {
 	console.log("<|EOF|>");

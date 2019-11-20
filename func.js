@@ -15,14 +15,17 @@ const ops = [
 		let read = files.readFileSync(a+".dx", "utf8");
 		return evalFunc(read);
 	}},
+	// Var Define
 	{name: "is", f: (a, b) => {
 		global[a] = b;
 	}},
-	{name: "log", f: (a) => {
-		out(a);
-	}},
+	// Var Declare
 	{name: "local", f: (a) => {
 		global[a] = null;
+	}},
+	// Console
+	{name: "log", f: (a) => {
+		out(a);
 	}},
 	{name: "linelog", f: (a, b = null) => {
 		if (typeof a === "string") {
