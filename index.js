@@ -7,7 +7,7 @@
 const files = require("fs"); // file reading
 const fn = require("./func"); // grammar, io, and other
 
-let read = files.createReadStream("code.dx", "utf8");
+let read = files.createReadStream("code.jc", "utf8");
 read.on("data", (ch) => {
 	//fn.out(fn.lex(ch));
 	fn.lex(ch);
